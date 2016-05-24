@@ -53,6 +53,8 @@
 #define COMPR_CODEC_CAPS_OVERFLOW
 #endif
 
+#define U32_MAX ((u32)~0U)
+
 /* TODO:
  * - add substream support for multiple devices in case of
  *	SND_DYNAMIC_MINORS is not used
