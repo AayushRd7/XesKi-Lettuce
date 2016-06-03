@@ -217,6 +217,10 @@
 	qcom,cont-splash-enabled;
 };
 
+&mdss_fb0 {
+        qcom,mdss-fb-splash-logo-enabled;
+};
+
 &tlmm_pinmux {
 	bma2x2_int1_pin {
 		qcom,pins = <&gp 112>;
