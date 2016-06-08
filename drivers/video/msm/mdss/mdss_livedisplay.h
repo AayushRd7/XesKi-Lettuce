@@ -30,8 +30,8 @@ struct mdss_livedisplay_ctx {
 	uint8_t sre_weak_value;
 	uint8_t sre_medium_value;
 	uint8_t sre_strong_value;
-	uint8_t cabc_ce_value;
 	uint8_t aco_value;
+	uint8_t cabc_ce_value;
 
 	const uint8_t *ce_off_cmds;
 	const uint8_t *ce_on_cmds;
@@ -52,8 +52,6 @@ struct mdss_livedisplay_ctx {
 	unsigned int sre_level;
 	bool aco_enabled;
 	bool ce_enabled;
-
-	unsigned int link_state;
 
 	unsigned int num_presets;
 	unsigned int caps;
@@ -93,7 +91,7 @@ enum {
 	MODE_COLOR_ENHANCE	= 0x08,
 	MODE_PRESET		= 0x10,
 	MODE_RGB		= 0x20,
-	MODE_CABC_COLOR_ENHANCE = 0x40,
+	MODE_CABC_COLOR_ENHANCE	= 0x40,
 	MODE_UPDATE_ALL		= 0xFF,
 };
 
