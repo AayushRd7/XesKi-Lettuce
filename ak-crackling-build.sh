@@ -45,7 +45,7 @@ function clean_all {
 			rm `echo $MODULES_DIR"/*.ko"`
 		fi
 		cd $REPACK_DIR
-		rm -rf $KERNEL
+		rm -rf zImage
 		rm -rf $DTBIMAGE
 		git reset --hard > /dev/null 2>&1
 		git clean -f -d > /dev/null 2>&1
