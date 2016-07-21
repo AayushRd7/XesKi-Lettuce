@@ -20,7 +20,7 @@ TOOLCHAIN_DIR="/home/ak/android"
 
 # Kernel Details
 BASE_AK_VER="AK"
-VER=".017.CRACKLING"
+VER=".018.CRACKLING"
 AK_VER="$BASE_AK_VER$VER"
 
 # Vars
