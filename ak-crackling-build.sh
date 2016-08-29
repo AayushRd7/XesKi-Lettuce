@@ -16,7 +16,7 @@ DEFCONFIG="ak_crackling-64_defconfig"
 KERNEL_DIR=`pwd`
 RESOURCE_DIR="$KERNEL_DIR/.."
 ANYKERNEL_DIR="$RESOURCE_DIR/AK-Crackling-AnyKernel2"
-TOOLCHAIN_DIR="/home/ak/android"
+TOOLCHAIN_DIR="$KERNEL_DIR/.."
 
 # Kernel Details
 BASE_AK_VER="AK"
