@@ -92,6 +92,13 @@ config IOSCHED_SWITCHER
 	  on. It requires being manually initialized from a different driver
 	  in order to grab the request_queue pointer that should have its I/O
 	  scheduler switched to Noop when the screen turns off.
+		  
+config IOSCHED_ZEN
+	tristate "Zen I/O scheduler"
+	default n
+	---help---
+	FCFS, dispatches are back-inserted, deadlines ensure fairness.
+	Should work best with devices where there is no travel delay.
 
 choice
 	prompt "Default I/O scheduler"
@@ -139,6 +146,7 @@ config DEFAULT_IOSCHED
 	default "cfq" if DEFAULT_CFQ
 	default "bfq" if DEFAULT_BFQ
 	default "noop" if DEFAULT_NOOP
+	default "zen" if DEFAULT_ZEN
 
 endmenu
 
