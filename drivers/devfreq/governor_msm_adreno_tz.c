@@ -22,7 +22,7 @@
 #include <linux/msm_adreno_devfreq.h>
 #include <asm/cacheflush.h>
 #include <soc/qcom/scm.h>
-#include <linux/powersuspend.h>
+#include <linux/display_state.h>
 #include "governor.h"
 
 static DEFINE_SPINLOCK(tz_lock);
@@ -61,7 +61,9 @@ static void do_partner_start_event(struct work_struct *work);
 static void do_partner_stop_event(struct work_struct *work);
 static void do_partner_suspend_event(struct work_struct *work);
 static void do_partner_resume_event(struct work_struct *work);
-/* Boolean to detect if pm has entered suspend mode */
+
+/* Adreno Be notified about State */
+static bool display_status;
 static bool suspended = false;
 
 static struct workqueue_struct *workqueue;
@@ -201,13 +203,12 @@ static int tz_get_target_freq(struct devfreq *devfreq, unsigned long *freq,
 	}
 
 	*freq = stats.current_frequency;
-	*flag = 0;
 
 	/*
 	 * Force to use & record as min freq when system has
-	 * entered pm-suspend or screen-off state.
+	 * entered screen-off state.
 	 */
-	if (suspended || power_suspended) {
+	if (suspended || !display_status) {
 		*freq = devfreq->profile->freq_table[devfreq->profile->max_state - 1];
 		return 0;
 	}
@@ -370,8 +371,6 @@ static int tz_resume(struct devfreq *devfreq)
 	struct devfreq_dev_profile *profile = devfreq->profile;
 	unsigned long freq;
 
-	suspended = false;
-
 	freq = profile->initial_freq;
 
 	return profile->target(devfreq->dev.parent, &freq, 0);
@@ -382,16 +381,11 @@ static int tz_suspend(struct devfreq *devfreq)
 	struct devfreq_msm_adreno_tz_data *priv = devfreq->data;
 	unsigned int scm_data[2] = {0, 0};
 	__secure_tz_reset_entry2(scm_data, sizeof(scm_data), priv->is_64);
-
+	display_status = display_state();
 	suspended = true;
-
 	priv->bin.total_time = 0;
 	priv->bin.busy_time = 0;
-	priv->bus.total_time = 0;
-	priv->bus.gpu_time = 0;
-	priv->bus.ram_time = 0;
-
-        return 0;
+	return 0;
 }
 
 static int tz_handler(struct devfreq *devfreq, unsigned int event, void *data)
@@ -423,6 +417,8 @@ static int tz_handler(struct devfreq *devfreq, unsigned int event, void *data)
 
 	case DEVFREQ_GOV_RESUME:
 		result = tz_resume(devfreq);
+		display_status = display_state();
+		suspended = false;
 		break;
 
 	case DEVFREQ_GOV_INTERVAL:
