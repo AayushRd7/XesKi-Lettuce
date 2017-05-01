@@ -25,12 +25,12 @@ yellow='\033[0;33m'
 red='\033[0;31m'
 nocol='\033[0m'
 # Modify the following variable if you want to build
-export CROSS_COMPILE="/home/aayushrd7/uber5.3/bin/aarch64-linux-android-"
+export CROSS_COMPILE="/home/aayushrd7/uber/bin/aarch64-cortex_a53-linux-gnueabi-"
 export ARCH=arm64
 export SUBARCH=arm64
 export KBUILD_BUILD_USER="AayushRd7"
 export KBUILD_BUILD_HOST="XesKiMachine"
-export LOCALVERSION="-XesKi™-v5"
+export LOCALVERSION="-XesKi™-v6"
 MODULES_DIR=/home/aayushrd7/KernelWithLove/common
 OUT_DIR=/home/aayushrd7/KernelWithLove/lettuce
 
@@ -70,7 +70,7 @@ cp $KERNEL_DIR/arch/arm64/boot/Image  $OUT_DIR/tools/zImage
 cp $KERNEL_DIR/arch/arm64/boot/dt.img  $OUT_DIR/tools/dt.img
 cp $MODULES_DIR/*.ko $OUT_DIR/modules/
 cd $OUT_DIR
-zip -r XeskiKernel_UBTC-v5.1.zip *
+zip -r XeskiKernel_UBTC-v6.zip *
 cd $KERNEL_DIR
 BUILD_END=$(date +"%s")
 DIFF=$(($BUILD_END - $BUILD_START))
